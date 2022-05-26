@@ -44,7 +44,7 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                            <x-dropdown-link :href="route('profile')">
+                            <x-dropdown-link :href="route('profile')" :active="request()->routeIs('profile')">
                                 {{ __('Perfil') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('logout')">

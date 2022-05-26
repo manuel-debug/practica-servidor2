@@ -37,6 +37,8 @@ Route::get('/profile', function () {
     return view('auth.user-editor');
 })->middleware(['auth'])->name('profile');
 
-
+// Route::get('/profile',function(){
+//     return view('users.usersTable')->name('profile');
+// });
 
 require __DIR__.'/auth.php';
