@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,9 +34,7 @@ Route::get('/messages', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('messages');
 
-Route::get('/profile', function () {
-    return view('auth.user-editor');
-})->middleware(['auth'])->name('profile');
+Route::get('/profile',[UserController::class,'edit'])->middleware(['auth'])->name('profile');
 
 // Route::get('/profile',function(){
 //     return view('users.usersTable')->name('profile');

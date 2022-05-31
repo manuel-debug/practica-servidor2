@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -54,9 +56,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        
+        return view('users.user-editor',['user'=>auth()->user()]);
+        
     }
 
     /**
@@ -66,9 +70,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validation=$request->validate([
+            'name'=>'required|max:50',
+            'last_name'=>'required|max:70',
+            'email'=>'required|email:rfc,dns',
+            'phone_number'=>'required|digits:9|nullable',
+            'address'=>'max:50|string|nullable',
+            'password'=>'required|max:50|string',
+            
+        ]);
+        $user= Auth::user();
+        $user->name=$validation['name'];
+        $user->last_name=$validation['last_name'];
+        $user->email=$validation['email'];
+        $user->phone_number=$validation['phone_number'];
+        $user->address=$validation['address'];
+        $user->password=$validation['password'];
+        $user->update();
+        return redirect()->back()->with('status','User updated successfully');
+
     }
 
     /**
