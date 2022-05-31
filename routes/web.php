@@ -36,8 +36,6 @@ Route::get('/messages', function () {
 
 Route::get('/profile',[UserController::class,'edit'])->middleware(['auth'])->name('profile');
 
-// Route::get('/profile',function(){
-//     return view('users.usersTable')->name('profile');
-// });
+Route::post('/profile',[UserController::class,'update'])->middleware(['auth'])->name('updateProfile');
 
 require __DIR__.'/auth.php';

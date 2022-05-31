@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -53,14 +54,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit()
     {
-        
+
         return view('users.user-editor',['user'=>auth()->user()]);
-        
+
     }
 
     /**
@@ -78,17 +78,18 @@ class UserController extends Controller
             'email'=>'required|email:rfc,dns',
             'phone_number'=>'required|digits:9|nullable',
             'address'=>'max:50|string|nullable',
-            'password'=>'required|max:50|string',
-            
+            'password'=>'confirmed|required', //Rules\Password::defaults() añadir esta regla despues de desarrollo
+
         ]);
+
         $user= Auth::user();
-        $user->name=$validation['name'];
-        $user->last_name=$validation['last_name'];
-        $user->email=$validation['email'];
-        $user->phone_number=$validation['phone_number'];
-        $user->address=$validation['address'];
-        $user->password=$validation['password'];
-        $user->update();
+        $user->name=$request->name;
+        $user->last_name=$request->last_name;
+        $user->email=$request->email;
+        $user->phone_number=$request->phone_number;
+        $user->address=$request->address;
+        $user->password=Hash::make($request->password);
+        $user->save();
         return redirect()->back()->with('status','User updated successfully');
 
     }
