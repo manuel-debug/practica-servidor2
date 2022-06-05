@@ -16,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('users.user-list',['users'=>User::with('role')->paginate(5)]);
+        
     }
 
     /**
@@ -72,14 +73,14 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $validation=$request->validate([
+        $request->validate([
             'name'=>'required|max:50',
             'last_name'=>'required|max:70',
             'email'=>'required|email:rfc,dns',
-            'phone_number'=>'required|digits:9|nullable',
+            'phone_number'=>'digits:9|nullable',
             'address'=>'max:50|string|nullable',
             'password'=>'confirmed|required', //Rules\Password::defaults() añadir esta regla despues de desarrollo
-
+            'profile_picture'=>'nullable|image|mimes:jpg,png,jpeg'
         ]);
 
         $user= Auth::user();
@@ -89,6 +90,13 @@ class UserController extends Controller
         $user->phone_number=$request->phone_number;
         $user->address=$request->address;
         $user->password=Hash::make($request->password);
+        if($request->hasFile('profile_picture')){
+            $file=$request->file('profile_picture');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('uploads/users/',$filename);
+            $user->profile_picture=$filename;
+        }
         $user->save();
         return redirect()->back()->with('status','User updated successfully');
 

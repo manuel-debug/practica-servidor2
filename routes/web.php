@@ -26,13 +26,11 @@ Route::get('/courses', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('courses');
 
-Route::get('/users', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('users');
-
 Route::get('/messages', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('messages');
+
+Route::get('/users',[UserController::class,'index'])->middleware(['auth'])->name('users');
 
 Route::get('/profile',[UserController::class,'edit'])->middleware(['auth'])->name('profile');
 
