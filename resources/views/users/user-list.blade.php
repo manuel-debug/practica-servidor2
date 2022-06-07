@@ -9,6 +9,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    @if(session()->has('status'))
+                    <div class="alert alert-success">
+                        {{ session()->get('status') }}
+                    </div>
+                    @endif
+                    @if(session()->has('error'))
+                    <div class="alert alert-success">
+                        {{ session()->get('error') }}
+                    </div>
+                    @endif
                     <table class="table table-hover">
 
                         <thead>
@@ -16,7 +26,7 @@
                             <th>ID</th>
 
                             <th>NIF</th>
-    
+
                             <th>Nombre</th>
 
                             <th>Apellidos</th>
@@ -41,7 +51,7 @@
 
                             <tr>
 
-                                <td>{{$user->id}} </td>        
+                                <td>{{$user->id}} </td>
 
                                 <td>{{$user->nif}} </td>
 
@@ -56,9 +66,9 @@
                                 <td>{{$user->address}} </td>
 
                                 <td>@if($user->status==0)
-                                        No activo
+                                    No activo
                                     @else
-                                        Activo
+                                    Activo
                                     @endif
                                 </td>
 
@@ -71,9 +81,9 @@
                                 </td>
 
                                 <td>
-                                    <a class="btn btn-warning" href="">Activar/desactivar</a>
-                                    <a class="btn btn-warning" href="">Editar</a>
-                                    <a class="btn btn-warning" href="">Eliminar</a>
+                                    <a class="btn btn-warning" href="{{ route('changeStatus', $user->id) }}">Activar/desactivar</a>
+                                    <a class="btn btn-warning" href="{{ route('adminEdit', $user->id) }}">Editar</a>
+                                    <a class="btn btn-warning" href="{{ route('deleteUser', $user->id) }}">Eliminar</a>
                                 </td>
                             </tr>
                             @endforeach

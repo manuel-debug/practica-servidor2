@@ -102,6 +102,48 @@ class UserController extends Controller
 
     }
 
+    public function adminEdit($id)
+    {
+        $user=User::find($id);
+        return view('users.admin-editor',['user'=>$user]);
+    }
+
+    public function editUser(Request $request)
+    {
+        $request->validate([
+            'id'=>'required',
+            'nif'=>'required|nif',
+            'name'=>'required|max:50',
+            'last_name'=>'required|max:70',
+            'email'=>'required|email',
+            'phone_number'=>'spanish_phone|nullable',
+            'address'=>'max:50|string|nullable',
+            'password'=>'required', //Rules\Password::defaults() añadir esta regla despues de desarrollo
+            'profile_picture'=>'nullable|image|mimes:jpg,png,jpeg',
+            'rol'=>'required'
+        ]);
+        $user= User::find($request->id);
+        $user->nif=$request->nif;
+        $user->name=$request->name;
+        $user->last_name=$request->last_name;
+        $user->email=$request->email;
+        $user->phone_number=$request->phone_number;
+        $user->address=$request->address;
+        $user->password=Hash::make($request->password);
+        if($request->hasFile('profile_picture')){
+            $file=$request->file('profile_picture');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('uploads/users/',$filename);
+            $user->profile_picture=$filename;
+        }
+        $user->role_id=$request->rol;
+        $user->save();
+        return redirect()->route('users')->with('status','User updated successfully');
+
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -110,6 +152,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user=User::find($id);
+        $user->delete();
+        return redirect()->back()->with('status','User deleted successfully');
+    }
+
+    public function changeStatus($id)
+    {
+        $user=User::find($id);
+        if($user->status==1){
+            $user->status=0;
+        }elseif($user->status==0){
+            $user->status=1;
+        }
+        $user->save();
+        return redirect()->back()->with('status','Status updated successfully');
     }
 }

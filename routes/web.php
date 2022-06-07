@@ -36,4 +36,12 @@ Route::get('/profile',[UserController::class,'edit'])->middleware(['auth'])->nam
 
 Route::post('/profile',[UserController::class,'update'])->middleware(['auth'])->name('updateProfile');
 
+Route::get('/adminEdit/{id}',[UserController::class,'adminEdit'])->middleware(['auth'])->name('adminEdit');
+
+Route::post('/editUser',[UserController::class,'editUser'])->middleware(['auth'])->name('editUser');
+
+Route::get('/deleteUser/{id}',[UserController::class,'destroy'])->middleware(['auth'])->name('deleteUser');
+
+Route::get('/changeStatus/{id}',[UserController::class,'changeStatus'])->middleware(['auth'])->name('changeStatus');
+
 require __DIR__.'/auth.php';
