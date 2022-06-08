@@ -21,27 +21,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -116,7 +95,7 @@ class UserController extends Controller
             'name'=>'required|max:50',
             'last_name'=>'required|max:70',
             'email'=>'required|email',
-            'phone_number'=>'spanish_phone|nullable',
+            'phone_number'=>'digits:9|nullable',
             'address'=>'max:50|string|nullable',
             'password'=>'required', //Rules\Password::defaults() añadir esta regla despues de desarrollo
             'profile_picture'=>'nullable|image|mimes:jpg,png,jpeg',
