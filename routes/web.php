@@ -53,4 +53,4 @@ Route::get('/participantes/{id}', [CourseController::class, 'participantes'])->m
 
 Route::get('/createCurso', [CourseController::class, 'create'])->middleware(['auth'])->name('createCourse');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
