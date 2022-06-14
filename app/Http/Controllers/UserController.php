@@ -17,7 +17,6 @@ class UserController extends Controller
     public function index()
     {
         return view('users.user-list',['users'=>User::with('role')->paginate(5)]);
-        
     }
 
     /**

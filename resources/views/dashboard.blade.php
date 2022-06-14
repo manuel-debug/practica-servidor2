@@ -12,10 +12,11 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     Has iniciado sesion correctamente!
                     @if(Auth::user()->status==0)
-                        <br>Para acceder a las funciones de la pagina primero un administrador debe de activar tu cuenta
+                    <br>Para acceder a las funciones de la pagina primero un administrador debe de activar tu cuenta
                     @endif
                 </div>
                 @endif
+                
             </div>
         </div>
     </div>

@@ -43,4 +43,14 @@ Route::get('/changeStatus/{id}', [UserController::class, 'changeStatus'])->middl
 
 Route::get('/courses', [CourseController::class, 'index'])->middleware(['auth'])->name('courses');
 
+Route::get('/editCourse/{id}', [CourseController::class, 'edit'])->middleware(['auth'])->name('editCourse');
+
+Route::post('/updateCourse', [CourseController::class, 'update'])->middleware(['auth'])->name('updateCourse');
+
+Route::get('/deleteCourse/{id}', [CourseController::class, 'destroy'])->middleware(['auth'])->name('deleteCourse');
+
+Route::get('/participantes/{id}', [CourseController::class, 'participantes'])->middleware(['auth'])->name('participantes');
+
+Route::get('/createCurso', [CourseController::class, 'create'])->middleware(['auth'])->name('createCourse');
+
 require __DIR__ . '/auth.php';

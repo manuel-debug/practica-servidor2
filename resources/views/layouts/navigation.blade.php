@@ -22,7 +22,7 @@
                     <x-nav-link :href="route('messages')" :active="request()->routeIs('messages')">
                         {{ __('Mensages') }}
                     </x-nav-link>
-                    <!-- Opciones del menu que requieran ser administrador -->
+                    <!-- Opciones del menu que requieran ser administrador o profesor -->
                     @if(Auth::user()->role_id==1 || Auth::user()->role_id==3)
                     <x-nav-link :href="route('courses')" :active="request()->routeIs('courses')">
                         {{ __('Lista de cursos') }}
